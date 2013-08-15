@@ -1,0 +1,6 @@
+picam
+
+Inital idea is this:
+ - function to take a photo using the raspicam
+ - function to upload photo to google drive (or similar?)
+ - call this function with a cron job
