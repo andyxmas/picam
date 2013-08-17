@@ -46,5 +46,3 @@ def upload_to_gdrive(filename, title, description, mimetype):
     file = drive_service.files().insert(
         body=body, media_body=media_body).execute()
     pprint.pprint(file)
-
-upload_to_gdrive('test2.txt', 'second test', 'some description', 'text/plain')
