@@ -3,7 +3,7 @@
 import os
 import datetime
 import subprocess
-import togdrive
+import upload
 import time
 
 
@@ -22,13 +22,7 @@ def take_single_photo():
 
     time.sleep(10)
     try:
-        with open(filename):
-            togdrive.upload_to_gdrive(
-                filename,
-                filename,
-                'photo taken using the raspberry pi camera module',
-                'image/jpeg'
-            )
+        upload.upload_image(filename)
     except IOError:
         print 'Oh dear.'
 
