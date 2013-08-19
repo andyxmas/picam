@@ -1,15 +1,13 @@
 picam
 
-Inital idea is this:
+#how it works:
  - function to take a photo using the raspicam
- - function to upload photo to google drive (or similar?)
+ - function to upload photo to google drive
  - call this function with a cron job
 
+#inspiration
+http://www.raspberrypi-spy.co.uk/2013/06/testing-multiple-pi-camera-options-with-python
+https://developers.google.com/drive/quickstart-python
 
- 1. Borrow code from here: http://www.raspberrypi-spy.co.uk/2013/06/testing-multiple-pi-camera-options-with-python/ to write a function that takes a photo. [done]
- 2. 
- ??
- upload to google drive may be more hassle that its worth right now. think just sshing it to web server might make better sense. try: subprocess.Popen(["scp", filename, "%(user)s@%(server)s:%(remotepath)s" % vars]).wait()  from http://stackoverflow.com/questions/68335/how-do-i-copy-a-file-to-a-remote-server-in-python-using-scp-or-ssh
- ??
-
- 2a. working on the google dive upload. installed google-api-python-client . following this tutorial for now: https://developers.google.com/drive/quickstart-python
+#requirements:
+google-api-python-client
