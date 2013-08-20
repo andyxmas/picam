@@ -14,8 +14,8 @@ def take_single_photo():
 
     # define the command
     filename = nicetime + '.jpg'
-    cmd = 'raspistill -o ' + filename
-    print cmd
+    cmd = 'raspistill -o ' + filename + '-w 500 -h 500 -q 80'
+    print"Executing: ", cmd
 
     # how the hell does this run it!!?? you need to learn this!!!!!
     pid = subprocess.call(cmd, shell=True)
