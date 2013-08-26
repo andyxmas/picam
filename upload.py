@@ -12,6 +12,10 @@ import atom.data
 import gdata.client
 import gdata.docs.client
 import gdata.docs.data
+import logging
+
+# configure where log file should be recorded
+logging.basicConfig(filename='picam_upload.log',level=logging.DEBUG)
 
 def upload_image(filename):
     '''uploads an image to google drive'''
@@ -29,31 +33,33 @@ def upload_image(filename):
     # Get a list of all available resources (GetAllResources() requires >=
     # gdata-2.0.15)
     # nb, this isnt required, but good login check and worth keeping?
-    print 'Logging in...',
+    logging.info('Logging in...')
     try:
         docsclient.ClientLogin(username, password, docsclient.source)
     except (gdata.client.BadAuthentication, gdata.client.Error), e:
         sys.exit('Unknown Error: ' + str(e))
     except:
         sys.exit('Login Error, perhaps incorrect username/password')
-    print 'success!'
+    logging.info('success!')
 
     # The default root collection URI
     uri = 'https://docs.google.com/feeds/upload/create-session/default/private/full'
     # Get a list of all available resources (GetAllResources() requires >=
     # gdata-2.0.15)
-    print 'Fetching Collection/Directory ID...',
+    logging.info('Fetching Collection/Directory ID...')
     try:
         resources = docsclient.GetAllResources(
             uri='https://docs.google.com/feeds/default/private/full/-/folder?title=' + collection + '&title-exact=true')
     except:
         sys.exit('ERROR: Unable to retrieve resources')
+        logging.warning('ERROR: Unable to retrieve resources')
     # If no matching resources were found
     if not resources:
         sys.exit('Error: The collection "' + collection + '" was not found.')
+        logging.warning('Error: The collection "' + collection + '" was not found.')
     # Set the collection URI
     uri = resources[0].get_resumable_create_media_link().href
-    print 'some other success!'
+    logging.info('some other success!')
     
     # Make sure Google doesn't try to do any conversion on the upload (e.g.
     # convert images to documents)
@@ -66,4 +72,4 @@ def upload_image(filename):
         docsclient, fhandle, file_type, file_size, chunk_size=1048576, desired_class=gdata.data.GDEntry)
     new_entry = uploader.UploadFile(uri, entry=gdata.data.GDEntry(
         title=atom.data.Title(text=os.path.basename(fhandle.name))))
-    print 'upload success!'
+    logging.info('upload success!')

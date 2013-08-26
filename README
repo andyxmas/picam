@@ -1,4 +1,5 @@
 picam
+=====
 
 #how it works:
  - function to take a photo using the raspicam
@@ -18,3 +19,33 @@ google-api-python-client (
  - then install pip http://www.pip-installer.org/en/latest/installing.html
  - then pip install --upgrade google-api-python-client
 
+
+
+
+
+Daylight
+========
+
+Simple function to return true if the current time is between sunrise and sunset.
+
+Current intened use if to stop the raspberry pi cam taking photos when its dark.
+
+Requirements
+------------
+ * python dateutils to parse date string to timedate
+   sudo apt-get install python-dateutil
+
+
+Plan
+----
+
+* Get sunrise/sunset times from openweathermap.org
+* Parse xml to time or datetime
+* compare time now with these times to return true/false
+
+Further...
+----------
+To avoid having to call the weather web service every time:
+ * function, called daily by cron to save the xml file locally
+ * adjust is_daylight to read local file instead of api call 
+   if its present, but fall back to the api call if file is missing. 
