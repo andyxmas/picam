@@ -14,7 +14,7 @@ def save_daylight_xml():
     url = baseurl + query
     r = requests.get(url)
 
-    f = open('/home/andy/repos/daylight/weather.xml', 'w')
+    f = open('/home/andy/repos/picam/weather.xml', 'w')
     f.write(r.text)
     f.close()
 

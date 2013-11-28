@@ -9,7 +9,7 @@ from dateutil.parser import *
 
 def get_daylight_hours():
     """using openweathermap, get sunrise and sunset times"""
-    f = open('/home/andy/repos/daylight/weather.xml', 'r')
+    f = open('/home/andy/repos/picam/weather.xml', 'r')
     tree = ET.parse(f)
     root = tree.getroot()
     f.close()
@@ -29,12 +29,23 @@ def get_daylight_hours():
 
 
 def is_daylight():
-    # current_time = datetime.datetime.now()
+    # current_date_time = datetime.datetime.now()
     current_time = time.time()
-    sunrise = get_daylight_hours()['sunrise']
-    sunset = get_daylight_hours()['sunset']
+    sunrise = get_daylight_hours()['sunrise'].time()
+    sunset = get_daylight_hours()['sunset'].time()
 
-    if (current_time > sunrise) and (current_time < sunset):
+    print "sunrise:", sunrise
+    print "sunset:", sunset
+    # print "current date time", current_date_time
+    print "current time:", current_time
+
+    rise_time = time.strptime(str(sunrise), "%H:%M:%S")
+    set_time = time.strptime(str(sunset), "%H:%M:%S")
+
+    print "rise_time:", rise_time
+    print "set_time:", set_time
+
+    if (current_time > rise_time) and (current_time < set_time):
         return True
     else:
         return False
