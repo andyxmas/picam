@@ -15,7 +15,7 @@ import gdata.docs.data
 import logging
 
 # configure where log file should be recorded
-logging.basicConfig(filename='picam_upload.log',level=logging.DEBUG)
+# logging.basicConfig(filename='picam_upload.log',level=logging.DEBUG)
 
 def upload_image(filename):
     '''uploads an image to google drive'''
@@ -33,14 +33,17 @@ def upload_image(filename):
     # Get a list of all available resources (GetAllResources() requires >=
     # gdata-2.0.15)
     # nb, this isnt required, but good login check and worth keeping?
-    logging.info('Logging in...')
+    logging.info('Logging in to google drive...')
     try:
         docsclient.ClientLogin(username, password, docsclient.source)
     except (gdata.client.BadAuthentication, gdata.client.Error), e:
+        logging.debug('Unknow Error: ' + str(e))
         sys.exit('Unknown Error: ' + str(e))
     except:
         sys.exit('Login Error, perhaps incorrect username/password')
-    logging.info('success!')
+        logging.debug('Login Error, perhaps incorrect username/password')
+    
+    logging.info('Login succesful.')
 
     # The default root collection URI
     uri = 'https://docs.google.com/feeds/upload/create-session/default/private/full'
@@ -59,7 +62,6 @@ def upload_image(filename):
         logging.warning('Error: The collection "' + collection + '" was not found.')
     # Set the collection URI
     uri = resources[0].get_resumable_create_media_link().href
-    logging.info('some other success!')
     
     # Make sure Google doesn't try to do any conversion on the upload (e.g.
     # convert images to documents)
@@ -67,9 +69,13 @@ def upload_image(filename):
 
     fhandle = open(filename)
     file_size = os.path.getsize(fhandle.name)
+    
     # Create an uploader and upload the file
     uploader = gdata.client.ResumableUploader(
         docsclient, fhandle, file_type, file_size, chunk_size=1048576, desired_class=gdata.data.GDEntry)
-    new_entry = uploader.UploadFile(uri, entry=gdata.data.GDEntry(
-        title=atom.data.Title(text=os.path.basename(fhandle.name))))
-    logging.info('upload success!')
+    try:
+        new_entry = uploader.UploadFile(uri, entry=gdata.data.GDEntry(
+            title=atom.data.Title(text=os.path.basename(fhandle.name))))
+        logging.info('uploaded successfully to gdrive.')
+    except:
+        logging.debug('upload to gdrive appears to have failed at the last :-(')

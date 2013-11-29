@@ -29,25 +29,21 @@ def get_daylight_hours():
 
 
 def is_daylight():
-    # current_date_time = datetime.datetime.now()
     current_time = time.time()
     sunrise = get_daylight_hours()['sunrise'].time()
     sunset = get_daylight_hours()['sunset'].time()
 
-    print "sunrise:", sunrise
-    print "sunset:", sunset
-    # print "current date time", current_date_time
-    print "current time:", current_time
+    # print "sunrise:", sunrise
+    # print "sunset:", sunset
+    # print "current time:", current_time
 
     rise_time = time.strptime(str(sunrise), "%H:%M:%S")
     set_time = time.strptime(str(sunset), "%H:%M:%S")
 
-    print "rise_time:", rise_time
-    print "set_time:", set_time
+    # print "rise_time:", rise_time
+    # print "set_time:", set_time
 
     if (current_time > rise_time) and (current_time < set_time):
         return True
     else:
         return False
-
-print is_daylight()
