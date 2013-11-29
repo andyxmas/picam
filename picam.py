@@ -43,10 +43,10 @@ def take_single_photo():
         print 'Upload failed. IOError.'
 	logging.debug('upload failed, IOError')
 
-# if daylight.is_daylight():
-#    take_single_photo()
-#    logging.info('Established it is daylight. Taking Photo.'
-#else:
-    # print "It's too dark to take a photo...", datetime.datetime.now()
-    # logging.info('No photo taken - the sun is set.')
-take_single_photo()
+if daylight.is_daylight():
+    take_single_photo()
+    logging.info('Established it is daylight. Taking Photo.')
+
+else:
+    logging.info('No photo taken, its after sunset.')
+
