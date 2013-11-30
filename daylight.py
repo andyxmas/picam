@@ -5,7 +5,7 @@ import datetime
 import requests
 import xml.etree.ElementTree as ET
 from dateutil.parser import *
-
+# import logging
 
 def get_daylight_hours():
     """using openweathermap, get sunrise and sunset times"""
@@ -29,21 +29,27 @@ def get_daylight_hours():
 
 
 def is_daylight():
-    current_time = time.time()
+    current = datetime.datetime.now().time()
     sunrise = get_daylight_hours()['sunrise'].time()
     sunset = get_daylight_hours()['sunset'].time()
 
-    # print "sunrise:", sunrise
-    # print "sunset:", sunset
-    # print "current time:", current_time
+# convert the xml string into an actual date/time
+    rise_datetime = time.strptime(str(sunrise), "%H:%M:%S")
+    set_datetime = time.strptime(str(sunset), "%H:%M:%S")
 
-    rise_time = time.strptime(str(sunrise), "%H:%M:%S")
-    set_time = time.strptime(str(sunset), "%H:%M:%S")
+#get just the hours minutes and seconds of the date/times
+    current_time = time.strftime("%H:%M:%S")
+    rise_time = time.strftime("%H:%M:%S", rise_datetime)
+    set_time = time.strftime("%H:%M:%S", set_datetime)
 
-    # print "rise_time:", rise_time
-    # print "set_time:", set_time
+#    logging.info("current_time:", current_time)
+#    logging.info("rise_time:", rise_time)
+#    logging.info("set_time:", set_time)
 
     if (current_time > rise_time) and (current_time < set_time):
+#        logging.info("currently daylight")
         return True
     else:
+#        logging.info("the sun is set")
         return False
+

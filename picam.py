@@ -45,7 +45,6 @@ def take_single_photo():
 
 if daylight.is_daylight():
     take_single_photo()
-    logging.info('Established it is daylight. Taking Photo.')
 
 else:
     logging.info('No photo taken, its after sunset.')
