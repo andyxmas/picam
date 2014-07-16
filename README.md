@@ -7,17 +7,18 @@ picam
  - call this function with a cron job
 
 #inspiration
-raspberrypi-spy.co.uk/2013/06/testing-multiple-pi-camera-options-with-python
-https://developers.google.com/drive/quickstart-python
+ - raspberrypi-spy.co.uk/2013/06/testing-multiple-pi-camera-options-with-python
+ - https://developers.google.com/drive/quickstart-python
 
 #requirements:
 gdata-python-client
+
 https://developers.google.com/gdata/articles/python_client_lib?csw=1
 
-google-api-python-client (
+google-api-python-client
  - first install python-setuptools via apt-get
  - then install pip http://www.pip-installer.org/en/latest/installing.html
- - then pip install --upgrade google-api-python-client
+ - then `pip install --upgrade google-api-python-client`
 
 
 
